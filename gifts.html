@@ -123,18 +123,26 @@ function chooseGift(index){
     })
   });
 
-  /* Reveal selected gift */
-  const cards = document.querySelectorAll(".giftCard");
+ /* Reveal selected gift */
+const cards = document.querySelectorAll(".giftCard");
 
-  cards.forEach((card, i) => {
-    const cover = card.querySelector(".cover");
+cards.forEach((card, i) => {
+  const cover = card.querySelector(".cover");
+  const giftImg = card.querySelector(".giftImage");
 
-    if (i === index) {
-      cover.style.display = "none";
-    } else {
-      card.style.display = "none";
-    }
-  });
+  if (i === index) {
+    // hide cover
+    cover.style.display = "none";
+
+    // force gift image to show
+    giftImg.style.display = "block";
+    giftImg.style.visibility = "visible";
+    giftImg.style.opacity = "1";
+  } else {
+    card.style.display = "none";
+  }
+});
+
 
   giftChosen = true;
 }
@@ -142,6 +150,7 @@ function chooseGift(index){
 
 </body>
 </html>
+
 
 
 
