@@ -6,13 +6,11 @@
   <title>Choose Your Gift 🎁</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Preload covers (fast show) -->
+  <!-- Preload images -->
   <link rel="preload" as="image" href="cover1.png">
   <link rel="preload" as="image" href="cover2.png">
   <link rel="preload" as="image" href="cover3.png">
   <link rel="preload" as="image" href="cover4.png">
-
-  <!-- Preload posters (stay hidden by CSS) -->
   <link rel="preload" as="image" href="gift1.jpg">
   <link rel="preload" as="image" href="gift2.jpg">
   <link rel="preload" as="image" href="gift3.jpg">
@@ -37,6 +35,7 @@
   <p>Here are 4 mystery gifts! Pick the one you like the most 💖</p>
 </div>
 
+<!-- Gift options -->
 <div id="giftOptions">
 
   <div class="giftCard" onclick="chooseGift(0)">
@@ -66,17 +65,17 @@
    GOOGLE SHEET LOGGING
    ========================= */
 
-/* 🔴 PUT YOUR GOOGLE APPS SCRIPT URL HERE */
-const LOG_URL = "https://script.google.com/macros/s/AKfycbwbF8-8s6cBARU2u-8ZA-EvPzlUIlkJpP9wOvKj5lt0kUwkprqeyonOLnoJclRbBJiBrg/exec";
+/* 🔴 PASTE YOUR GOOGLE WEB APP URL HERE */
+const LOG_URL = "https://script.google.com/macros/s/AKfycbzahhQ1c2bv42tfJvb_43DyT6YDt-fQie3HFlGjnrnsDXgiqzGhIDiBcuwQThsJSjNeOA/exec";
 
 /* =========================
-   NAME
+   USER NAME
    ========================= */
 document.getElementById("userName").innerText =
   sessionStorage.getItem("username") || "My Special One";
 
 /* =========================
-   MUSIC (mobile safe)
+   MUSIC
    ========================= */
 const music = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
@@ -103,7 +102,7 @@ function toggleMusic(){
 }
 
 /* =========================
-   GIFT LOGIC + LOGGING
+   GIFT LOGIC + SHEET LOG
    ========================= */
 
 let giftChosen = false;
@@ -113,16 +112,16 @@ function chooseGift(index){
 
   const name = sessionStorage.getItem("username") || "Unknown";
 
-  /* Send to Google Sheet */
+  /* Send data to Google Sheet */
   fetch(LOG_URL, {
     method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    mode: "no-cors",
     body: JSON.stringify({
       name: name,
       gift: index + 1,
       ua: navigator.userAgent
     })
-  }).catch(()=>{});
+  });
 
   /* Reveal selected gift */
   const cards = document.querySelectorAll(".giftCard");
@@ -131,7 +130,6 @@ function chooseGift(index){
     const cover = card.querySelector(".cover");
 
     if (i === index) {
-      card.classList.add("revealed");
       cover.style.display = "none";
     } else {
       card.style.display = "none";
@@ -144,3 +142,4 @@ function chooseGift(index){
 
 </body>
 </html>
+
