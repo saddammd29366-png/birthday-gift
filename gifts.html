@@ -131,18 +131,34 @@ cards.forEach((card, i) => {
   const giftImg = card.querySelector(".giftImage");
 
   if (i === index) {
-    cover.style.display = "none";
+    // make sure card can layer images correctly
+    card.style.position = "relative";
+    card.style.overflow = "hidden";
 
-    // make gift image full size
+    // force gift image to be visible and full size
     giftImg.style.display = "block";
+    giftImg.style.position = "absolute";
+    giftImg.style.inset = "0";
     giftImg.style.width = "100%";
     giftImg.style.height = "100%";
     giftImg.style.objectFit = "cover";
     giftImg.style.opacity = "1";
+    giftImg.style.visibility = "visible";
+    giftImg.style.zIndex = "2";
+
+    // hide cover safely (even if CSS is weird)
+    cover.style.position = "absolute";
+    cover.style.inset = "0";
+    cover.style.opacity = "0";
+    cover.style.visibility = "hidden";
+    cover.style.pointerEvents = "none";
+    cover.style.zIndex = "3";
+
   } else {
     card.style.display = "none";
   }
 });
+
 
 
   giftChosen = true;
@@ -151,6 +167,7 @@ cards.forEach((card, i) => {
 
 </body>
 </html>
+
 
 
 
