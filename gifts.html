@@ -6,7 +6,6 @@
   <title>Choose Your Gift 🎁</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Preload images -->
   <link rel="preload" as="image" href="cover1.png">
   <link rel="preload" as="image" href="cover2.png">
   <link rel="preload" as="image" href="cover3.png">
@@ -37,7 +36,6 @@
 </div>
 
 <div id="giftOptions">
-
   <div class="giftCard" onclick="chooseGift(0)">
     <img class="giftImage" src="gift1.jpg" alt="Gift 1" loading="eager">
     <img class="cover" src="cover1.png" alt="Mystery Gift" loading="eager">
@@ -57,18 +55,11 @@
     <img class="giftImage" src="gift4.jpg" alt="Gift 4" loading="eager">
     <img class="cover" src="cover4.png" alt="Mystery Gift" loading="eager">
   </div>
-
 </div>
 
 <script>
-/* =========================
-   GOOGLE SHEET LOGGING
-   ========================= */
 const LOG_URL = "https://script.google.com/macros/s/AKfycbwZmpI07ZG70hkS6Xg497oD2DJYPPzAAfZUXpLJl261dk9IUn-5GQx2NIW_HugC70oFaA/exec";
 
-/* =========================
-   MUSIC
-   ========================= */
 const music = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
 
@@ -93,9 +84,6 @@ function toggleMusic(){
   }
 }
 
-/* =========================
-   CONFETTI (works even without CSS)
-   ========================= */
 function popConfetti(){
   const layer = document.createElement("div");
   layer.style.position = "fixed";
@@ -131,9 +119,6 @@ function popConfetti(){
   setTimeout(() => layer.remove(), 2600);
 }
 
-/* =========================
-   GIFT LOGIC
-   ========================= */
 let giftChosen = false;
 
 function chooseGift(index){
@@ -168,10 +153,23 @@ function chooseGift(index){
     }
   });
 
-  popConfetti();          // ✅ CALL IT HERE
+  popConfetti();
+  document.getElementById("finalMessage").style.display = "block";
   giftChosen = true;
 }
 </script>
+
+<div id="finalMessage" style="
+  display:none;
+  margin-top:20px;
+  font-size:1.4rem;
+  text-align:center;
+  color:#ff4f8b;
+  font-weight:600;
+  animation: fadeIn 1.2s ease forwards;
+">
+  Looks like this one was meant for you 💞
+</div>
 
 </body>
 </html>
