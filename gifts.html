@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <h1>🎁 Choose one gift… one is very special 💖</h1>
+  <title>Choose Your Gift 🎁</title>
   <link rel="stylesheet" href="style.css">
 
   <!-- Preload images -->
@@ -28,12 +28,14 @@
   🔇 Mute Music
 </button>
 
+<!-- ✅ h1 must be inside body -->
+<h1>🎁 Choose one gift… one is very special 💖</h1>
 
 <div id="wishMessage">
   <p>
-Here are some mystery gifts 🎁  
-One of them is very special… choose carefully 💖
-</p>
+    Here are some mystery gifts 🎁<br>
+    One of them is very special… choose carefully 💖
+  </p>
 </div>
 
 <!-- Gift options -->
@@ -65,15 +67,15 @@ One of them is very special… choose carefully 💖
 /* =========================
    GOOGLE SHEET LOGGING
    ========================= */
-
-/* 🔴 PASTE YOUR GOOGLE WEB APP URL HERE */
 const LOG_URL = "https://script.google.com/macros/s/AKfycbwZmpI07ZG70hkS6Xg497oD2DJYPPzAAfZUXpLJl261dk9IUn-5GQx2NIW_HugC70oFaA/exec";
 
 /* =========================
-   USER NAME
+   USER NAME (✅ safe)
    ========================= */
-document.getElementById("userName").innerText =
-  sessionStorage.getItem("username") || "My Special One";
+const userNameEl = document.getElementById("userName");
+if (userNameEl) {
+  userNameEl.innerText = sessionStorage.getItem("username") || "My Special One";
+}
 
 /* =========================
    MUSIC
@@ -105,7 +107,6 @@ function toggleMusic(){
 /* =========================
    GIFT LOGIC + SHEET LOG
    ========================= */
-
 let giftChosen = false;
 
 function chooseGift(index){
@@ -113,7 +114,6 @@ function chooseGift(index){
 
   const name = sessionStorage.getItem("username") || "Unknown";
 
-  /* Send data to Google Sheet */
   fetch(LOG_URL, {
     method: "POST",
     mode: "no-cors",
@@ -124,44 +124,37 @@ function chooseGift(index){
     })
   });
 
- /* Reveal selected gift */
-const cards = document.querySelectorAll(".giftCard");
+  const cards = document.querySelectorAll(".giftCard");
 
-cards.forEach((card, i) => {
-  const cover = card.querySelector(".cover");
-  const giftImg = card.querySelector(".giftImage");
+  cards.forEach((card, i) => {
+    const cover = card.querySelector(".cover");
+    const giftImg = card.querySelector(".giftImage");
 
-  if (i === index) {
-    // force card size
-    card.style.position = "relative";
-    card.style.width = "95vw";        // FULL width
-    card.style.maxWidth = "520px";    // safe limit
-    card.style.height = "55vh";       // LOWER height
-    card.style.margin = "0 auto";
-    card.style.overflow = "hidden";
+    if (i === index) {
+      card.style.position = "relative";
+      card.style.width = "95vw";
+      card.style.maxWidth = "520px";
+      card.style.height = "55vh";
+      card.style.margin = "0 auto";
+      card.style.overflow = "hidden";
 
-    // force image to fill card
-    giftImg.style.display = "block";
-    giftImg.style.position = "absolute";
-    giftImg.style.top = "0";
-    giftImg.style.left = "0";
-    giftImg.style.width = "100%";
-    giftImg.style.height = "100%";
-    giftImg.style.objectFit = "cover";
-    giftImg.style.opacity = "1";
-    giftImg.style.visibility = "visible";
-    giftImg.style.zIndex = "2";
+      giftImg.style.display = "block";
+      giftImg.style.position = "absolute";
+      giftImg.style.top = "0";
+      giftImg.style.left = "0";
+      giftImg.style.width = "100%";
+      giftImg.style.height = "100%";
+      giftImg.style.objectFit = "cover";
+      giftImg.style.opacity = "1";
+      giftImg.style.visibility = "visible";
+      giftImg.style.zIndex = "2";
 
-    // hide cover
-    cover.style.opacity = "0";
-    cover.style.visibility = "hidden";
-    cover.style.pointerEvents = "none";
-  } else {
-    card.style.display = "none";
-  }
-});
-
-
+      // ✅ force-hide cover (even if CSS uses !important)
+      cover.style.setProperty("display", "none", "important");
+    } else {
+      card.style.display = "none";
+    }
+  });
 
   giftChosen = true;
 }
@@ -169,16 +162,3 @@ cards.forEach((card, i) => {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
