@@ -269,7 +269,7 @@ h1{ font-size:24px; margin:12px 0 20px; }
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 9999;
+  z-index: 99999;
 }
 
 .fx-heart{
@@ -278,9 +278,9 @@ h1{ font-size:24px; margin:12px 0 20px; }
   top: -10vh;
   font-size: var(--s);
   opacity: 0;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
   animation: heartFall var(--d) ease-in forwards;
   transform: translateY(0) rotate(0deg);
+  will-change: transform, opacity;
 }
 
 @keyframes heartFall{
@@ -288,6 +288,8 @@ h1{ font-size:24px; margin:12px 0 20px; }
   10%  { opacity: 1; }
   100% { opacity: 0; transform: translateY(120vh) rotate(var(--r)) scale(1.1); }
 }
+
+
 
 
 
