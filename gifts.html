@@ -19,7 +19,6 @@
 
 <body>
 
-<!-- Background Music -->
 <audio id="bgMusic" loop preload="auto" playsinline>
   <source src="bg-music.mp3" type="audio/mpeg">
 </audio>
@@ -37,7 +36,6 @@
   </p>
 </div>
 
-<!-- Gift options -->
 <div id="giftOptions">
 
   <div class="giftCard" onclick="chooseGift(0)">
@@ -96,11 +94,15 @@ function toggleMusic(){
 }
 
 /* =========================
-   CONFETTI / SPARKLES
+   CONFETTI (works even without CSS)
    ========================= */
 function popConfetti(){
   const layer = document.createElement("div");
-  layer.className = "fx-layer";
+  layer.style.position = "fixed";
+  layer.style.inset = "0";
+  layer.style.pointerEvents = "none";
+  layer.style.overflow = "hidden";
+  layer.style.zIndex = "99999";
   document.body.appendChild(layer);
 
   const icons = ["💖","✨","💞","🎉","💗","🌸"];
@@ -108,16 +110,22 @@ function popConfetti(){
 
   for (let i = 0; i < count; i++) {
     const p = document.createElement("div");
-    p.className = "fx-heart";
     p.textContent = icons[Math.floor(Math.random() * icons.length)];
-
-    p.style.setProperty("--x", Math.random() * 100 + "vw");
-    p.style.setProperty("--s", (16 + Math.random() * 18) + "px");
-    p.style.setProperty("--d", (1200 + Math.random() * 900) + "ms");
-    p.style.setProperty("--r", (Math.random() * 360 - 180) + "deg");
-
-    p.style.marginLeft = (Math.random() * 40 - 20) + "px";
+    p.style.position = "absolute";
+    p.style.left = (Math.random() * 100) + "vw";
+    p.style.top = "-10vh";
+    p.style.fontSize = (16 + Math.random() * 18) + "px";
+    p.style.opacity = "0";
     layer.appendChild(p);
+
+    const dur = 1200 + Math.random() * 900;
+    const rot = (Math.random() * 360 - 180);
+
+    p.animate([
+      { opacity: 0, transform: `translateY(0) rotate(0deg) scale(0.9)` },
+      { opacity: 1, offset: 0.1 },
+      { opacity: 0, transform: `translateY(120vh) rotate(${rot}deg) scale(1.1)` }
+    ], { duration: dur, easing: "ease-in", fill: "forwards" });
   }
 
   setTimeout(() => layer.remove(), 2600);
@@ -160,46 +168,10 @@ function chooseGift(index){
     }
   });
 
- function popConfetti(){
-  const layer = document.createElement("div");
-  layer.style.position = "fixed";
-  layer.style.inset = "0";
-  layer.style.pointerEvents = "none";
-  layer.style.overflow = "hidden";
-  layer.style.zIndex = "99999";
-  document.body.appendChild(layer);
-
-  const icons = ["💖","✨","💞","🎉","💗","🌸"];
-  const count = 28;
-
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement("div");
-    p.textContent = icons[Math.floor(Math.random() * icons.length)];
-    p.style.position = "absolute";
-    p.style.left = (Math.random() * 100) + "vw";
-    p.style.top = "-10vh";
-    p.style.fontSize = (16 + Math.random() * 18) + "px";
-    p.style.opacity = "0";
-    p.style.transition = "transform 0ms";
-    layer.appendChild(p);
-
-    const dur = 1200 + Math.random() * 900;
-    const rot = (Math.random() * 360 - 180);
-
-    p.animate([
-      { opacity: 0, transform: `translateY(0) rotate(0deg) scale(0.9)` },
-      { opacity: 1, offset: 0.1 },
-      { opacity: 0, transform: `translateY(120vh) rotate(${rot}deg) scale(1.1)` }
-    ], { duration: dur, easing: "ease-in", fill: "forwards" });
-  }
-
-  setTimeout(() => layer.remove(), 2600);
+  popConfetti();          // ✅ CALL IT HERE
+  giftChosen = true;
 }
-}
-
 </script>
 
 </body>
 </html>
-
-
