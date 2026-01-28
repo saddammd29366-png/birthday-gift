@@ -63,8 +63,14 @@
 </div>
 
 <script>
+/* =========================
+   GOOGLE SHEET LOGGING
+   ========================= */
 const LOG_URL = "https://script.google.com/macros/s/AKfycbwZmpI07ZG70hkS6Xg497oD2DJYPPzAAfZUXpLJl261dk9IUn-5GQx2NIW_HugC70oFaA/exec";
 
+/* =========================
+   MUSIC
+   ========================= */
 const music = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
 
@@ -89,6 +95,37 @@ function toggleMusic(){
   }
 }
 
+/* =========================
+   CONFETTI / SPARKLES
+   ========================= */
+function popConfetti(){
+  const layer = document.createElement("div");
+  layer.className = "fx-layer";
+  document.body.appendChild(layer);
+
+  const icons = ["💖","✨","💞","🎉","💗","🌸"];
+  const count = 28;
+
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement("div");
+    p.className = "fx-heart";
+    p.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+    p.style.setProperty("--x", Math.random() * 100 + "vw");
+    p.style.setProperty("--s", (16 + Math.random() * 18) + "px");
+    p.style.setProperty("--d", (1200 + Math.random() * 900) + "ms");
+    p.style.setProperty("--r", (Math.random() * 360 - 180) + "deg");
+
+    p.style.marginLeft = (Math.random() * 40 - 20) + "px";
+    layer.appendChild(p);
+  }
+
+  setTimeout(() => layer.remove(), 2600);
+}
+
+/* =========================
+   GIFT LOGIC
+   ========================= */
 let giftChosen = false;
 
 function chooseGift(index){
@@ -123,6 +160,7 @@ function chooseGift(index){
     }
   });
 
+  popConfetti();     // 🎉 sparkle effect
   giftChosen = true;
 }
 </script>
