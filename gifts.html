@@ -28,7 +28,6 @@
   🔇 Mute Music
 </button>
 
-<!-- ✅ h1 must be inside body -->
 <h1>🎁 Choose one gift… one is very special 💖</h1>
 
 <div id="wishMessage">
@@ -64,22 +63,8 @@
 </div>
 
 <script>
-/* =========================
-   GOOGLE SHEET LOGGING
-   ========================= */
 const LOG_URL = "https://script.google.com/macros/s/AKfycbwZmpI07ZG70hkS6Xg497oD2DJYPPzAAfZUXpLJl261dk9IUn-5GQx2NIW_HugC70oFaA/exec";
 
-/* =========================
-   USER NAME (✅ safe)
-   ========================= */
-const userNameEl = document.getElementById("userName");
-if (userNameEl) {
-  userNameEl.innerText = sessionStorage.getItem("username") || "My Special One";
-}
-
-/* =========================
-   MUSIC
-   ========================= */
 const music = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
 
@@ -104,9 +89,6 @@ function toggleMusic(){
   }
 }
 
-/* =========================
-   GIFT LOGIC + SHEET LOG
-   ========================= */
 let giftChosen = false;
 
 function chooseGift(index){
@@ -127,30 +109,15 @@ function chooseGift(index){
   const cards = document.querySelectorAll(".giftCard");
 
   cards.forEach((card, i) => {
-    const cover = card.querySelector(".cover");
-    const giftImg = card.querySelector(".giftImage");
-
     if (i === index) {
+      card.classList.add("revealed");
+
       card.style.position = "relative";
       card.style.width = "95vw";
       card.style.maxWidth = "520px";
       card.style.height = "55vh";
       card.style.margin = "0 auto";
       card.style.overflow = "hidden";
-
-      giftImg.style.display = "block";
-      giftImg.style.position = "absolute";
-      giftImg.style.top = "0";
-      giftImg.style.left = "0";
-      giftImg.style.width = "100%";
-      giftImg.style.height = "100%";
-      giftImg.style.objectFit = "cover";
-      giftImg.style.opacity = "1";
-      giftImg.style.visibility = "visible";
-      giftImg.style.zIndex = "2";
-
-      // ✅ force-hide cover (even if CSS uses !important)
-      cover.style.setProperty("display", "none", "important");
     } else {
       card.style.display = "none";
     }
