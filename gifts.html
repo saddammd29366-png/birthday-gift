@@ -131,12 +131,13 @@ cards.forEach((card, i) => {
   const giftImg = card.querySelector(".giftImage");
 
   if (i === index) {
-    // hide cover
     cover.style.display = "none";
 
-    // force gift image to show
+    // make gift image full size
     giftImg.style.display = "block";
-    giftImg.style.visibility = "visible";
+    giftImg.style.width = "100%";
+    giftImg.style.height = "100%";
+    giftImg.style.objectFit = "cover";
     giftImg.style.opacity = "1";
   } else {
     card.style.display = "none";
@@ -150,6 +151,7 @@ cards.forEach((card, i) => {
 
 </body>
 </html>
+
 
 
 
